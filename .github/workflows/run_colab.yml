@@ -32,10 +32,4 @@ jobs:
           DESTINATION_PHONE: ${{ secrets.DESTINATION_PHONE }}
         run: |
           python CPCB_script.py
-          
-      - name: Upload results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: notebook-output
-          path: CPCB_script.py
+
