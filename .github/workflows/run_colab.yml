@@ -21,7 +21,7 @@ jobs:
       - name: Convert and clean notebook
         run: |
           # Convert notebook to .py file explicitly
-          jupyter nbconvert --to script CPCB.ipynb --output-dir . --output CPCB_script
+          jupyter nbconvert --to script CPCB_new.ipynb --output-dir . --output CPCB_script
           
           # Clean the generated script
           sed -i '/^!/d' CPCB_script.txt  # Remove shell commands
