@@ -35,12 +35,4 @@ jobs:
           # Make script executable and run
           chmod +x CPCB_script.py
           python CPCB_script.py
-          
-      - name: Upload results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: notebook-output
-          path: |
-            CPCB_script.py
-            CPCB.ipynb
+
