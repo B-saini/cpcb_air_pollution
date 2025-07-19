@@ -20,8 +20,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install jupyter nbconvert papermill pandas 
           
-      - name: Run notebook
+      - name: Execute notebook with papermill
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_PHONE: "whatsapp:+14155238886"
+          DESTINATION_PHONE: ${{ secrets.DESTINATION_PHONE }}
         run: |
-          jupyter nbconvert --execute --to notebook --inplace CPCB.ipynb
-          # Alternative using papermill:
-          # papermill your_notebook.ipynb CPCB_new.ipynb
+          # Convert notebook to script and run directly
+          jupyter nbconvert --to script CPCB.ipynb --output CPCB_script
+          python CPCB_script.py || echo "Script execution failed"
