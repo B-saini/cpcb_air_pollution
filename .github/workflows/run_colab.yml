@@ -24,4 +24,4 @@ jobs:
         run: |
           jupyter nbconvert --execute --to notebook --inplace CPCB.ipynb
           # Alternative using papermill:
-          # papermill your_notebook.ipynb CPCB.ipynb
+          # papermill your_notebook.ipynb CPCB_new.ipynb
