@@ -29,4 +29,18 @@ jobs:
         run: |
           # Convert notebook to script and run directly
           jupyter nbconvert --to script CPCB.ipynb --output CPCB_script
-          python CPCB_script.py || echo "Script execution failed"
+          # Rename to ensure .py extension
+          mv CPCB_script.txt CPCB_script.py || true
+          
+          # Make script executable and run
+          chmod +x CPCB_script.py
+          python CPCB_script.py
+          
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: notebook-output
+          path: |
+            CPCB_script.py
+            CPCB.ipynb
