@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install twilio pandas requests jupyter nbconvert papermill geopandas
+          pip install twilio pandas requests jupyter nbconvert papermill geopandas plotly
           
       - name: Convert and clean notebook
         run: |
