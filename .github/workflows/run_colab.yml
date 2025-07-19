@@ -22,6 +22,6 @@ jobs:
           
       - name: Run notebook
         run: |
-          jupyter nbconvert --execute --to notebook --inplace your_notebook.ipynb
+          jupyter nbconvert --execute --to notebook --inplace CPCB.ipynb
           # Alternative using papermill:
           # papermill your_notebook.ipynb CPCB.ipynb
