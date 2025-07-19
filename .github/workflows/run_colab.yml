@@ -1,8 +1,6 @@
-name: Run Colab Hourly
+name: Execute CPCB Notebook
 on:
-  schedule:
-    - cron: "0 20 * * *"  # Every hour at minute 0
-  workflow_dispatch:  # Allow manual triggers
+  workflow_dispatch:
 
 jobs:
   run-notebook:
@@ -18,21 +16,26 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install jupyter nbconvert papermill pandas 
+          pip install twilio pandas requests jupyter nbconvert
           
-      - name: Execute notebook with papermill
+      - name: Convert and clean notebook
+        run: |
+          # Convert notebook and remove magic commands
+          jupyter nbconvert --to script CPCB.ipynb --output CPCB_script
+          sed -i '/^!/d' CPCB_script.py
+          sed -i '/^%matplotlib/d' CPCB_script.py
+          
+      - name: Execute script
         env:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
-          TWILIO_PHONE: "whatsapp:+14155238886"
           DESTINATION_PHONE: ${{ secrets.DESTINATION_PHONE }}
         run: |
-          # Convert notebook to script and run directly
-          jupyter nbconvert --to script CPCB.ipynb --output CPCB_script
-          # Rename to ensure .py extension
-          mv CPCB_script.txt CPCB_script.py || true
-          
-          # Make script executable and run
-          chmod +x CPCB_script.py
           python CPCB_script.py
-
+          
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: notebook-output
+          path: CPCB_script.py
