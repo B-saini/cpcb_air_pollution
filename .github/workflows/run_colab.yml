@@ -3,7 +3,7 @@ on:
 schedule:
     # Runs at 7 PM IST (13:30 UTC) every day
     - cron: '30 13 * * *'
-  workflow_dispatch:
+workflow_dispatch:
 
 jobs:
   run-notebook:
