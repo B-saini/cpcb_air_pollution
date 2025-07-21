@@ -2,7 +2,7 @@ name: Execute CPCB Notebook
 on:
   workflow_dispatch:
   schedule:
-    - cron: '00 15 * * *'  # Runs at 7 PM IST (13:30 UTC) daily
+    - cron: '05 15 * * *'  # Runs at 7 PM IST (13:30 UTC) daily
 
 jobs:
   run-notebook:
