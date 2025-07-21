@@ -1,0 +1,9 @@
+name: Test Schedule
+on:
+  schedule:
+    - cron: '* * * * *'  # Runs every minute (for testing)
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Works at $(date)"
