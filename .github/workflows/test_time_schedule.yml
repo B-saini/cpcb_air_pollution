@@ -1,9 +1,13 @@
 name: Test Schedule
+
 on:
   schedule:
-    - cron: '* * * * *'  # Runs every minute (for testing)
+    - cron: '* * * * *'  # Runs every minute (UTC)
+  workflow_dispatch:      # 👈 Add this to allow manual trigger
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Working at $(date)"
+      - name: Print timestamp
+        run: echo "Triggered at $(date)"
